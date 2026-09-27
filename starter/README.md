@@ -18,36 +18,22 @@ Working in a command line environment is recommended for ease of use with git an
    * As you work on the code, continually commit changes. Trained models you want to keep must be committed to DVC.
 * Connect your local Git repository to GitHub.
 
-## Set up S3
+## DVC Remote
 
-* In your CLI environment install the<a href="https://docs.aws.amazon.com/cli/latest/userguide/cli-chap-install.html" target="_blank"> AWS CLI tool</a>.
-* In the navigation bar in the Udacity classroom select **Open AWS Gateway** and then click **Open AWS Console**. You will not need the AWS Access Key ID or Secret Access Key provided here.
-* From the Services drop down select S3 and then click Create bucket.
-* Give your bucket a name, the rest of the options can remain at their default.
-
-To use your new S3 bucket from the AWS CLI you will need to create an IAM user with the appropriate permissions. The full instructions can be found <a href="https://docs.aws.amazon.com/IAM/latest/UserGuide/id_users_create.html#id_users_create_console" target="_blank">here</a>, what follows is a paraphrasing:
-
-* Sign in to the IAM console <a href="https://console.aws.amazon.com/iam/" target="_blank">here</a> or from the Services drop down on the upper navigation bar.
-* In the left navigation bar select **Users**, then choose **Add user**.
-* Give the user a name and select **Programmatic access**.
-* In the permissions selector, search for S3 and give it **AmazonS3FullAccess**
-* Tags are optional and can be skipped.
-* After reviewing your choices, click create user. 
-* Configure your AWS CLI to use the Access key ID and Secret Access key.
+This project uses the Google Drive DVC remote configured in `.dvc/config`. Authenticate with the Google account that can access the shared folder, then use `dvc pull -r gdrive` to retrieve artifacts or `dvc push -r gdrive` to upload them. Keep OAuth credentials and token caches out of Git.
 
 ## GitHub Actions
 
 * Setup GitHub Actions on your repository. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
    * Make sure you set up the GitHub Action to use Python 3.13 (same version as development).
    * Note: Add flake8 to requirements.txt if you want to use it for linting: `pip install flake8`
-* Add your <a href="https://github.com/marketplace/actions/configure-aws-credentials-action-for-github-actions" target="_blank">AWS credentials to the Action</a>.
-* Set up <a href="https://github.com/iterative/setup-dvc" target="_blank">DVC in the action</a> and specify a command to `dvc pull`.
+* The checked-in workflow runs pytest and flake8 on Python 3.13. It does not need Google Drive credentials because its tests use local test fixtures.
 
 ## Data
 
 * Download census.csv from the data folder in the starter repository.
    * Information on the dataset can be found <a href="https://archive.ics.uci.edu/ml/datasets/census+income" target="_blank">here</a>.
-* Create a remote DVC remote pointing to your S3 bucket and commit the data.
+* Track the Census data and model with DVC, then push them to the configured Google Drive remote.
 * This data is messy, try to open it in pandas and see what you get.
 * To clean it, use your favorite text editor to remove all spaces.
 * Commit this modified data to DVC under a new name (we often want to keep the raw data untouched but then can keep updating the cooked version).

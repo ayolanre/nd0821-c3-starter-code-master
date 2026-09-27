@@ -1,3 +1,9 @@
+# Census Income Classifier
+
+## Submission Layout
+
+The submitted application is in `starter/`; Render uses this as its root directory. The nested `nd0821-c3-starter-code-master/` directory is the original course starter snapshot, not a second deliverable.
+
 Working in a command line environment is recommended for ease of use with git and dvc. If on Windows, WSL1 or 2 is recommended.
 
 # Environment Set up
@@ -14,7 +20,7 @@ Working in a command line environment is recommended for ease of use with git an
 
 ## Repositories
 * Create a directory for the project and initialize git.
-    * As you work on the code, continually commit changes. Trained models you want to use in production must be committed to GitHub.
+    * As you work on the code, continually commit changes. Track data and model artifacts with DVC, push them to the configured remote, and commit the DVC metadata to GitHub.
 * Connect your local git repo to GitHub.
 * Setup GitHub Actions on your repo. You can use one of the pre-made GitHub Actions if at a minimum it runs pytest and flake8 on push and requires both to pass without error.
     * Make sure you set up the GitHub Action to use Python 3.13 (same version as development).
@@ -42,10 +48,6 @@ Working in a command line environment is recommended for ease of use with git an
 * Write 3 unit tests to test the API (one for the GET and two for POST, one that tests each prediction).
 
 # API Deployment
-* Create a free Heroku account (for the next steps you can either use the web GUI or download the Heroku CLI).
-* Create a new app and have it deployed from your GitHub repository.
-    * Enable automatic deployments that only deploy if your continuous integration passes.
-    * Hint: think about how paths will differ in your local environment vs. on Heroku.
-    * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
-    * Note: Install flake8 separately if needed: `pip install flake8`
-* Write a script that uses the requests module to do one POST on your live API.
+* The FastAPI service is deployed on Render at https://nd0821-c3-starter-code-master-vbpv.onrender.com.
+* Render builds from the `starter/` root directory, pulls the model from the Google Drive DVC remote, and starts Uvicorn.
+* Run `python request_example.py` from `starter/` with `API_URL` set to the live service URL to verify inference.
