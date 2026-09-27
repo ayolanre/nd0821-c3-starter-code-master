@@ -72,15 +72,18 @@ To use your new S3 bucket from the AWS CLI you will need to create an IAM user w
 
 ## API Deployment
 
-* Create a free Heroku account (for the next steps you can either use the web GUI or download the Heroku CLI).
-* Create a new app and have it deployed from your GitHub repository.
-   * Enable automatic deployments that only deploy if your continuous integration passes.
-   * Hint: think about how paths will differ in your local environment vs. on Heroku.
-   * Hint: development in Python is fast! But how fast you can iterate slows down if you rely on your CI/CD to fail before fixing an issue. I like to run flake8 locally before I commit changes.
-   * Note: Install flake8 separately if needed: `pip install flake8`
-* Set up DVC on Heroku using the instructions contained in the starter directory.
-* Set up access to AWS on Heroku, if using the CLI: `heroku config:set AWS_ACCESS_KEY_ID=xxx AWS_SECRET_ACCESS_KEY=yyy`
-* Write a script that uses the requests module to do one POST on your live API.
+The API is publicly deployed on Render at:
+
+https://nd0821-c3-starter-code-master-vbpv.onrender.com
+
+Render uses `starter/` as its root directory, installs the app and DVC dependencies,
+and pulls the model from Google Drive before starting Uvicorn. To send the example
+prediction request from this directory in PowerShell:
+
+```powershell
+$env:API_URL = "https://nd0821-c3-starter-code-master-vbpv.onrender.com"
+python request_example.py
+```
 
 ## Completed project workflow
 
