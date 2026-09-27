@@ -34,7 +34,7 @@ ipykernel==6.30.1
 nbformat==5.10.4
 
 # Visualization
-altair==4.1.0
+altair==6.3.0
 
 # Flask extensions
 Flask==0.12.2
