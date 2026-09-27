@@ -7,10 +7,16 @@ import pandas as pd
 from fastapi import FastAPI, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
-from starter.ml.data import process_data
-from starter.ml.model import inference
+if __package__:
+    from .starter.ml.data import process_data
+    from .starter.ml.model import inference
+else:
+    from starter.ml.data import process_data
+    from starter.ml.model import inference
 
-MODEL_PATH = Path(os.getenv("MODEL_PATH", "model/model.joblib"))
+APP_DIR = Path(__file__).resolve().parent
+model_path = Path(os.getenv("MODEL_PATH", "model/model.joblib")).expanduser()
+MODEL_PATH = model_path if model_path.is_absolute() else APP_DIR / model_path
 app = FastAPI(title="Census Income Predictor", version="1.0.0")
 _artifact = None
 

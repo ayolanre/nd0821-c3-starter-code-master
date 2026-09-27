@@ -7,8 +7,8 @@ import joblib
 import pandas as pd
 from sklearn.model_selection import train_test_split
 
-from starter.ml.data import process_data
-from starter.ml.model import (
+from .ml.data import process_data
+from .ml.model import (
     compute_model_metrics,
     inference,
     performance_on_slices,
@@ -20,6 +20,7 @@ CATEGORICAL_FEATURES = [
     "relationship", "race", "sex", "native-country",
 ]
 LABEL = "salary"
+APP_DIR = Path(__file__).resolve().parent.parent
 
 
 def train_and_save(data_path, model_path, test_size=0.2):
@@ -74,8 +75,8 @@ def train_and_save(data_path, model_path, test_size=0.2):
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument("--data", default="data/census.csv")
-    parser.add_argument("--model", default="model/model.joblib")
+    parser.add_argument("--data", default=str(APP_DIR / "data" / "census.csv"))
+    parser.add_argument("--model", default=str(APP_DIR / "model" / "model.joblib"))
     args = parser.parse_args()
     artifact = train_and_save(args.data, args.model)
     print(f"Saved model to {args.model}")
