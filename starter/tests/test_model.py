@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import pytest
 
 from starter.ml.data import process_data
 from starter.ml.model import (
@@ -40,9 +41,9 @@ def test_model_training_and_inference_return_predictions():
 
 
 def test_compute_model_metrics_returns_precision_recall_fbeta():
+    # labels=[0, 1, 1], preds=[0, 1, 0]: TP=1, FP=0, FN=1 -> precision=1.0, recall=0.5, F1=2/3
     metrics = compute_model_metrics(np.array([0, 1, 1]), np.array([0, 1, 0]))
-    assert len(metrics) == 3
-    assert all(0.0 <= metric <= 1.0 for metric in metrics)
+    assert metrics == pytest.approx((1.0, 0.5, 2 / 3))
 
 
 def test_performance_on_slices_returns_metrics_for_nonempty_slice():
@@ -54,4 +55,6 @@ def test_performance_on_slices_returns_metrics_for_nonempty_slice():
         {"low": np.array([True, False, True, False])},
     )
     assert "low" in results
-    assert len(results["low"]) == 3
+    # slice rows 0 and 2 (X=0.0, 0.1) both have true label 0 and the model
+    # correctly predicts 0 for both, so precision/recall/fbeta all resolve to 1.0
+    assert results["low"] == pytest.approx((1.0, 1.0, 1.0))
