@@ -1,5 +1,11 @@
 # Census Income Classifier
 
+## Submission Repository
+
+Platform: GitHub
+
+Repository URL: https://github.com/ayolanre/nd0821-c3-starter-code-master
+
 ## Submission Layout
 
 The submitted application is in `starter/`; Render uses this as its root directory. The nested `nd0821-c3-starter-code-master/` directory is the original course starter snapshot, not a second deliverable.
